@@ -1,0 +1,30 @@
+SELECT work.ArtistID,count(workid) AS workcount  FROM work
+GROUP BY work.ArtistID;
+
+
+SELECT max(workcount) FROM 
+(SELECT work.ArtistID,count(workid) AS workcount FROM work
+GROUP BY work.ArtistID) as p;
+
+
+Select LastName,FirstName, workcount from listofartists 
+inner join (select work.ArtistID,count(workid) AS workcount FROM work
+GROUP BY work.ArtistID) as counter using (artistid);
+
+
+Select LastName,FirstName, workcount from listofartists 
+inner join (select work.ArtistID,count(workid) AS workcount FROM work
+GROUP BY work.ArtistID) as counter using (artistid)
+where counter.workcount=(SELECT max(workcount) 
+FROM (SELECT work.ArtistID,count(workid) AS workcount FROM work
+GROUP BY work.ArtistID) as p); 
+
+
+create view vworkcount as
+(SELECT work.ArtistID,count(workid) AS workcount  FROM work
+GROUP BY work.ArtistID)
+;
+Select LastName,FirstName, workcount from listofartists 
+inner join vworkcount using (artistid)
+where vworkcount.workcount=(SELECT max(workcount) 
+FROM vworkcount); 
