@@ -1,0 +1,14 @@
+# Logs
+
+
+logs
+**/logs
+
+*.log
+**/*.log
+
+.cache/
+**/.cache/
+
+.DS_Store
+**/.DS_Store
